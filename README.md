@@ -4,37 +4,6 @@ The Millet Marketplace Platform is a next-generation agricultural ecosystem desi
 It integrates AI, IoT, Blockchain, AR, and Predictive Analytics to modernize the supply chain of India’s “Shree Anna”.
 
 
-  System Architecture Diagram
-
-                ┌────────────────────┐
-                │    IoT Sensors     │
-                │ Soil, Temp, Rain   │
-                └─────────┬──────────┘
-                          |
-                          ▼
-                ┌────────────────────┐
-                │   IoT Gateway      │
-                │ LoRa / GSM Module  │
-                └─────────┬──────────┘
-                          |
-        ┌─────────────────▼───────────────────┐
-        │        Backend API (Django)         │
-        │  Auth • Farmer Data • Products • ML │
-        └─────────┬──────────┬───────────────┘
-                  │          │
-                  │          │
-          ┌───────▼───┐   ┌─▼────────────────┐
-          │  AI/ML     │   │ Blockchain Layer │
-          │ Prediction  │   │Certificates, ZKP │
-          │ Recommender │   └─────┬───────────┘
-          └───────┬────┘         │
-                  │               │
-          ┌───────▼───────────────▼──────────┐
-          │        Frontend (React)           │
-          │ Dashboard • AR Scanner • Wallet   │
-          └───────────────────────────────────┘
-
-
 
   System Workflow
 
