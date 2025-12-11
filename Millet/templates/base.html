@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ShreeAnna Connect{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #8BC34A;
+            --accent-color: #FFC107;
+            --text-color: #333;
+            --bg-color: #f5f5f5;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f9f5eb 0%, #f0e6d2 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Frosted Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+        
+        .glass-dark {
+            background: rgba(51, 51, 51, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            color: white;
+        }
+        
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Animated Wheat Background */
+        .wheat-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,10 Q50,0 70,10 T90,30 T70,50 T50,70 T30,50 T10,30 T30,10" fill="none" stroke="%23d4a017" stroke-width="1"/></svg>');
+            background-size: 100px 100px;
+            animation: wheat-sway 15s infinite linear;
+        }
+        
+        @keyframes wheat-sway {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+        
+        /* Animated Grass Footer */
+        .grass-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%234CAF50" fill-opacity="0.5" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,202.7C672,203,768,181,864,181.3C960,181,1056,203,1152,208C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            animation: grass-wave 10s ease infinite;
+        }
+        
+        @keyframes grass-wave {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-5%); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* Card Hover Effects */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        /* Form Styling */
+        .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 5px;
+            padding: 10px 15px;
+            color: var(--text-color);
+        }
+        
+        /* Loader Animation */
+        .loader {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top-color: var(--primary-color);
+            animation: spin 1s infinite linear;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Wheat Background Animation -->
+    <div class="wheat-bg"></div>
+    
+    <!-- Navbar -->
+    <nav class="navbar sticky top-0 z-50 px-4 py-3 mb-8">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'home' %}" class="text-2xl font-bold text-green-800">
+                <i class="fas fa-seedling mr-2"></i>ShreeAnna Connect
+            </a>
+            <div class="flex items-center space-x-4">
+                {% if user.is_authenticated %}
+                    {% if user.is_farmer %}
+                        <a href="{% url 'farmer_dashboard' %}" class="btn-glass px-4 py-2 text-green-800">Dashboard</a>
+                    {% else %}
+                        <a href="{% url 'consumer_dashboard' %}" class="btn-glass px-4 py-2 text-green-800">Dashboard</a>
+                    {% endif %}
+                    <a href="{% url 'profile' %}" class="btn-glass px-4 py-2 text-green-800">Profile</a>
+                    <a href="{% url 'logout' %}" class="btn-glass px-4 py-2 text-red-600">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn-glass px-4 py-2 text-green-800">Login</a>
+                    <div class="relative group">
+                        <button class="btn-glass px-4 py-2 text-green-800">Register</button>
+                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block glass">
+                            <a href="{% url 'register_farmer' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-t-md">As Farmer</a>
+                            <a href="{% url 'register_consumer' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-b-md">As Consumer</a>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Language Selector -->
+                <div class="relative group">
+                    <button class="btn-glass px-4 py-2 text-green-800">
+                        <i class="fas fa-language mr-1"></i> Language
+                    </button>
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block glass">
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-t-md">English</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100">हिंदी (Hindi)</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100">తెలుగు (Telugu)</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 rounded-b-md">தமிழ் (Tamil)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Messages -->
+    {% if messages %}
+        <div class="container mx-auto px-4 mb-8">
+            {% for message in messages %}
+                <div class="glass p-4 mb-4 {% if message.tags == 'error' %}bg-red-100{% elif message.tags == 'success' %}bg-green-100{% else %}bg-blue-100{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pb-24">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Animated Grass Footer -->
+    <footer class="grass-footer">
+        <div class="container mx-auto px-4 py-8 relative z-10">
+            <div class="text-center text-white">
+                <p>&copy; 2025 ShreeAnna Connect - Bridging Farmers and Consumers</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

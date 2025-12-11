@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Consumer Dashboard - ShreeAnna Connect{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold text-green-800 mb-2">Welcome, {{ user.first_name }}!</h1>
+    <p class="text-gray-600">Discover healthy millet products and personalized recommendations</p>
+</div>
+
+<!-- Dashboard Stats -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Cart Items</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ cart_items_count|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                <i class="fas fa-shopping-cart text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Orders</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ orders_count|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-amber-100 text-amber-600">
+                <i class="fas fa-box text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Farmers Adopted</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ adopted_farmers_count|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                <i class="fas fa-handshake text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Reward Points</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ reward_points|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                <i class="fas fa-award text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="glass p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <a href="{% url 'product_list' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-store mb-2 text-xl"></i>
+            <p>Shop Products</p>
+        </a>
+        <a href="{% url 'cart' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-shopping-cart mb-2 text-xl"></i>
+            <p>View Cart</p>
+        </a>
+        <a href="{% url 'health_advisor' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-heartbeat mb-2 text-xl"></i>
+            <p>Health Advisor</p>
+        </a>
+        <a href="{% url 'farmer_adoption' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-handshake mb-2 text-xl"></i>
+            <p>Adopt a Farmer</p>
+        </a>
+    </div>
+</div>
+
+<!-- Recommended Products -->
+<div class="glass p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Recommended for You</h2>
+    
+    {% if recommended_products %}
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {% for product in recommended_products %}
+        <div class="glass p-4 rounded-lg card-hover">
+            <div class="relative mb-3">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-40 object-cover rounded-lg">
+                <span class="absolute top-2 right-2 px-2 py-1 bg-green-500 text-white text-xs rounded-full">{{ product.get_millet_type_display }}</span>
+            </div>
+            <h3 class="font-bold text-green-800 mb-1">{{ product.name }}</h3>
+            <p class="text-gray-600 text-sm mb-2">by {{ product.farmer.user.get_full_name }}</p>
+            <div class="flex justify-between items-center mb-3">
+                <span class="font-bold text-green-800">₹{{ product.price }}</span>
+                <span class="text-sm text-gray-600">{{ product.weight }}g</span>
+            </div>
+            <div class="flex space-x-2">
+                <a href="{% url 'product_detail' product.id %}" class="btn-glass px-3 py-1 text-sm text-green-800 rounded flex-1 text-center">View</a>
+                <form method="post" action="{% url 'add_to_cart' product.id %}" class="flex-1">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-glass px-3 py-1 text-sm bg-green-600 text-white rounded w-full hover:bg-green-700">
+                        <i class="fas fa-cart-plus mr-1"></i> Add
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+        <p class="text-gray-600 mb-4">We're preparing personalized recommendations for you.</p>
+        <a href="{% url 'product_list' %}" class="btn-glass px-4 py-2 text-green-800 rounded-lg hover:bg-green-50">
+            Browse All Products
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Health Tips -->
+<div class="glass p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Health Tips</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-4 rounded-lg bg-green-50">
+            <div class="flex items-center mb-3">
+                <div class="p-2 rounded-full bg-green-100 text-green-600 mr-3">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3 class="font-bold text-green-800">Heart Health</h3>
+            </div>
+            <p class="text-gray-700">Millets are rich in magnesium, which helps reduce blood pressure and risk of heart attacks.</p>
+        </div>
+        
+        <div class="p-4 rounded-lg bg-blue-50">
+            <div class="flex items-center mb-3">
+                <div class="p-2 rounded-full bg-blue-100 text-blue-600 mr-3">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="font-bold text-blue-800">Brain Function</h3>
+            </div>
+            <p class="text-gray-700">The antioxidants in millets help support brain health and cognitive function.</p>
+        </div>
+        
+        <div class="p-4 rounded-lg bg-amber-50">
+            <div class="flex items-center mb-3">
+                <div class="p-2 rounded-full bg-amber-100 text-amber-600 mr-3">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 class="font-bold text-amber-800">Digestive Health</h3>
+            </div>
+            <p class="text-gray-700">The fiber in millets promotes digestive health and helps prevent constipation.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Orders -->
+<div class="glass p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Recent Orders</h2>
+    
+    {% if recent_orders %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-3 px-4 text-left">Order ID</th>
+                    <th class="py-3 px-4 text-left">Items</th>
+                    <th class="py-3 px-4 text-left">Amount</th>
+                    <th class="py-3 px-4 text-left">Status</th>
+                    <th class="py-3 px-4 text-left">Date</th>
+                    <th class="py-3 px-4 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                <tr class="border-t">
+                    <td class="py-3 px-4">#{{ order.id }}</td>
+                    <td class="py-3 px-4">{{ order.items_count }} items</td>
+                    <td class="py-3 px-4">₹{{ order.total_amount }}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs 
+                            {% if order.status == 'completed' %}bg-green-100 text-green-800
+                            {% elif order.status == 'processing' %}bg-blue-100 text-blue-800
+                            {% elif order.status == 'shipped' %}bg-purple-100 text-purple-800
+                            {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4">{{ order.created_at|date:"M d, Y" }}</td>
+                    <td class="py-3 px-4">
+                        <a href="#" class="text-blue-600 hover:text-blue-800">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+        <p class="text-gray-600 mb-4">You haven't placed any orders yet.</p>
+        <a href="{% url 'product_list' %}" class="btn-glass px-4 py-2 text-green-800 rounded-lg hover:bg-green-50">
+            Start Shopping
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Adopted Farmers -->
+<div class="glass p-6 rounded-lg">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Farmers You've Adopted</h2>
+    
+    {% if adopted_farmers %}
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for adoption in adopted_farmers %}
+        <div class="glass p-4 rounded-lg card-hover">
+            <div class="flex items-center mb-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                    <img src="{{ adoption.farmer.user.profile_picture.url }}" alt="{{ adoption.farmer.user.get_full_name }}" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h3 class="font-bold text-green-800">{{ adoption.farmer.user.get_full_name }}</h3>
+                    <p class="text-gray-600 text-sm">{{ adoption.farmer.farm_location }}</p>
+                </div>
+            </div>
+            <div class="mb-3">
+                <p class="text-gray-700 text-sm">Supporting since: {{ adoption.created_at|date:"M d, Y" }}</p>
+                <p class="text-gray-700 text-sm">Monthly contribution: ₹{{ adoption.monthly_amount }}</p>
+            </div>
+            <a href="#" class="btn-glass px-3 py-1 text-sm text-green-800 rounded block text-center">View Profile</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+        <p class="text-gray-600 mb-4">You haven't adopted any farmers yet.</p>
+        <a href="{% url 'farmer_adoption' %}" class="btn-glass px-4 py-2 text-green-800 rounded-lg hover:bg-green-50">
+            Adopt a Farmer
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block title %}Farmer Dashboard - ShreeAnna Connect{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h1 class="text-3xl font-bold text-green-800 mb-2">Welcome, {{ user.first_name }}!</h1>
+    <p class="text-gray-600">Manage your millet products and access farming resources</p>
+</div>
+
+<!-- Dashboard Stats -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Total Products</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ products_count|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                <i class="fas fa-box-open text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Total Orders</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ orders_count|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-amber-100 text-amber-600">
+                <i class="fas fa-shopping-cart text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Revenue</p>
+                <h3 class="text-2xl font-bold text-green-800">₹{{ revenue|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                <i class="fas fa-rupee-sign text-xl"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="glass p-6 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-gray-600">Reward Points</p>
+                <h3 class="text-2xl font-bold text-green-800">{{ reward_points|default:"0" }}</h3>
+            </div>
+            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                <i class="fas fa-award text-xl"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="glass p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Quick Actions</h2>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <a href="{% url 'add_product' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-plus-circle mb-2 text-xl"></i>
+            <p>Add New Product</p>
+        </a>
+        <a href="{% url 'price_prediction' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-chart-line mb-2 text-xl"></i>
+            <p>Price Prediction</p>
+        </a>
+        <a href="{% url 'crop_advisory' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-seedling mb-2 text-xl"></i>
+            <p>Crop Advisory</p>
+        </a>
+        <a href="{% url 'farmer_rewards' %}" class="btn-glass px-4 py-3 text-center text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-gift mb-2 text-xl"></i>
+            <p>Rewards & Loans</p>
+        </a>
+    </div>
+</div>
+
+<!-- Products List -->
+<div class="glass p-6 rounded-lg mb-8">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-green-800">Your Products</h2>
+        <a href="{% url 'add_product' %}" class="btn-glass px-4 py-2 text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-plus mr-2"></i> Add New
+        </a>
+    </div>
+    
+    {% if products %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-3 px-4 text-left">Product</th>
+                    <th class="py-3 px-4 text-left">Type</th>
+                    <th class="py-3 px-4 text-left">Price</th>
+                    <th class="py-3 px-4 text-left">Stock</th>
+                    <th class="py-3 px-4 text-left">Status</th>
+                    <th class="py-3 px-4 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="border-t">
+                    <td class="py-3 px-4">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                            </div>
+                            <span>{{ product.name }}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4">{{ product.get_millet_type_display }}</td>
+                    <td class="py-3 px-4">₹{{ product.price }}</td>
+                    <td class="py-3 px-4">{{ product.stock_quantity }}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs {% if product.is_available %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                            {% if product.is_available %}Available{% else %}Out of Stock{% endif %}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="flex space-x-2">
+                            <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
+                            <a href="#" class="text-red-600 hover:text-red-800"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+        <p class="text-gray-600 mb-4">You haven't added any products yet.</p>
+        <a href="{% url 'add_product' %}" class="btn-glass px-4 py-2 text-green-800 rounded-lg hover:bg-green-50">
+            <i class="fas fa-plus mr-2"></i> Add Your First Product
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Weather and Advisory -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <!-- Weather Alerts -->
+    <div class="glass p-6 rounded-lg">
+        <h2 class="text-xl font-bold text-green-800 mb-4">Weather Alerts</h2>
+        
+        {% if weather_alerts %}
+            {% for alert in weather_alerts %}
+            <div class="mb-4 p-4 rounded-lg {% if alert.severity == 'high' %}bg-red-50{% elif alert.severity == 'medium' %}bg-yellow-50{% else %}bg-blue-50{% endif %}">
+                <div class="flex items-center mb-2">
+                    <i class="fas fa-exclamation-triangle mr-2 {% if alert.severity == 'high' %}text-red-500{% elif alert.severity == 'medium' %}text-yellow-500{% else %}text-blue-500{% endif %}"></i>
+                    <h3 class="font-bold">{{ alert.title }}</h3>
+                </div>
+                <p class="text-gray-700">{{ alert.description }}</p>
+                <p class="text-sm text-gray-500 mt-2">{{ alert.date }}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center py-4">
+                <p class="text-gray-600">No weather alerts for your region.</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Government Schemes -->
+    <div class="glass p-6 rounded-lg">
+        <h2 class="text-xl font-bold text-green-800 mb-4">Government Schemes</h2>
+        
+        {% if schemes %}
+            {% for scheme in schemes %}
+            <div class="mb-4 p-4 rounded-lg bg-green-50">
+                <h3 class="font-bold text-green-800 mb-2">{{ scheme.title }}</h3>
+                <p class="text-gray-700 mb-2">{{ scheme.description }}</p>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-500">Deadline: {{ scheme.deadline }}</span>
+                    <a href="{{ scheme.link }}" class="text-green-600 hover:text-green-800">Learn more →</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center py-4">
+                <p class="text-gray-600">No active government schemes available.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Recent Orders -->
+<div class="glass p-6 rounded-lg mb-8">
+    <h2 class="text-xl font-bold text-green-800 mb-4">Recent Orders</h2>
+    
+    {% if recent_orders %}
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-3 px-4 text-left">Order ID</th>
+                    <th class="py-3 px-4 text-left">Customer</th>
+                    <th class="py-3 px-4 text-left">Products</th>
+                    <th class="py-3 px-4 text-left">Amount</th>
+                    <th class="py-3 px-4 text-left">Status</th>
+                    <th class="py-3 px-4 text-left">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in recent_orders %}
+                <tr class="border-t">
+                    <td class="py-3 px-4">#{{ order.id }}</td>
+                    <td class="py-3 px-4">{{ order.consumer.user.get_full_name }}</td>
+                    <td class="py-3 px-4">{{ order.items_count }} items</td>
+                    <td class="py-3 px-4">₹{{ order.total_amount }}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-1 rounded-full text-xs 
+                            {% if order.status == 'completed' %}bg-green-100 text-green-800
+                            {% elif order.status == 'processing' %}bg-blue-100 text-blue-800
+                            {% elif order.status == 'shipped' %}bg-purple-100 text-purple-800
+                            {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4">{{ order.created_at|date:"M d, Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+        <p class="text-gray-600">No orders received yet.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

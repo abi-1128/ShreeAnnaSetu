@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block title %}ShreeAnna Connect - Bridging Farmers and Consumers{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative overflow-hidden mb-16">
+    <div class="glass-dark p-8 rounded-lg text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white">ShreeAnna Connect</h1>
+        <p class="text-xl md:text-2xl mb-8 text-gray-200">Bridging Farmers and Consumers for a Healthier Tomorrow</p>
+        
+        <div class="flex flex-col md:flex-row justify-center gap-4 mb-8">
+            <a href="{% url 'register_farmer' %}" class="btn-glass px-6 py-3 text-white font-bold rounded-lg bg-green-600 hover:bg-green-700 transition duration-300">
+                Join as Farmer
+            </a>
+            <a href="{% url 'register_consumer' %}" class="btn-glass px-6 py-3 text-white font-bold rounded-lg bg-amber-600 hover:bg-amber-700 transition duration-300">
+                Join as Consumer
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="mb-16">
+    <h2 class="text-3xl font-bold text-center text-green-800 mb-8">Why Choose ShreeAnna Connect?</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Farmer Benefits -->
+        <div class="glass p-6 rounded-lg card-hover">
+            <div class="text-center mb-4">
+                <div class="inline-block p-3 rounded-full bg-green-100 text-green-600 mb-4">
+                    <i class="fas fa-tractor text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-green-800">For Farmers</h3>
+            </div>
+            <ul class="space-y-2 text-gray-700">
+                <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Direct market access</li>
+                <li><i class="fas fa-check-circle text-green-500 mr-2"></i> AI-powered price prediction</li>
+                <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Crop advisory services</li>
+                <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Weather alerts and forecasts</li>
+                <li><i class="fas fa-check-circle text-green-500 mr-2"></i> Government scheme information</li>
+            </ul>
+        </div>
+        
+        <!-- Consumer Benefits -->
+        <div class="glass p-6 rounded-lg card-hover">
+            <div class="text-center mb-4">
+                <div class="inline-block p-3 rounded-full bg-amber-100 text-amber-600 mb-4">
+                    <i class="fas fa-shopping-basket text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-amber-800">For Consumers</h3>
+            </div>
+            <ul class="space-y-2 text-gray-700">
+                <li><i class="fas fa-check-circle text-amber-500 mr-2"></i> Fresh farm products</li>
+                <li><i class="fas fa-check-circle text-amber-500 mr-2"></i> Health benefits information</li>
+                <li><i class="fas fa-check-circle text-amber-500 mr-2"></i> Personalized health advisory</li>
+                <li><i class="fas fa-check-circle text-amber-500 mr-2"></i> Adopt a farmer program</li>
+                <li><i class="fas fa-check-circle text-amber-500 mr-2"></i> Recipe suggestions</li>
+            </ul>
+        </div>
+        
+        <!-- Platform Benefits -->
+        <div class="glass p-6 rounded-lg card-hover">
+            <div class="text-center mb-4">
+                <div class="inline-block p-3 rounded-full bg-blue-100 text-blue-600 mb-4">
+                    <i class="fas fa-globe text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-blue-800">Platform Features</h3>
+            </div>
+            <ul class="space-y-2 text-gray-700">
+                <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> AI-powered recommendations</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Multilingual support</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Voice-based interaction</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Secure payment system</li>
+                <li><i class="fas fa-check-circle text-blue-500 mr-2"></i> Community forums</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Millet Types Section -->
+<div class="mb-16">
+    <h2 class="text-3xl font-bold text-center text-green-800 mb-8">Explore Millet Varieties</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Millet Type 1 -->
+        <div class="glass p-4 rounded-lg card-hover">
+            <img src="https://via.placeholder.com/300x200" alt="Pearl Millet" class="w-full h-48 object-cover rounded-lg mb-4">
+            <h3 class="text-xl font-bold text-green-800 mb-2">Pearl Millet (Bajra)</h3>
+            <p class="text-gray-700 mb-4">Rich in iron, protein, and fiber. Helps in managing diabetes and improving heart health.</p>
+            <a href="#" class="text-green-600 hover:text-green-800 font-medium">Learn more →</a>
+        </div>
+        
+        <!-- Millet Type 2 -->
+        <div class="glass p-4 rounded-lg card-hover">
+            <img src="https://via.placeholder.com/300x200" alt="Finger Millet" class="w-full h-48 object-cover rounded-lg mb-4">
+            <h3 class="text-xl font-bold text-green-800 mb-2">Finger Millet (Ragi)</h3>
+            <p class="text-gray-700 mb-4">Excellent source of calcium and amino acids. Beneficial for bone health and reducing anxiety.</p>
+            <a href="#" class="text-green-600 hover:text-green-800 font-medium">Learn more →</a>
+        </div>
+        
+        <!-- Millet Type 3 -->
+        <div class="glass p-4 rounded-lg card-hover">
+            <img src="https://via.placeholder.com/300x200" alt="Foxtail Millet" class="w-full h-48 object-cover rounded-lg mb-4">
+            <h3 class="text-xl font-bold text-green-800 mb-2">Foxtail Millet (Kangni)</h3>
+            <p class="text-gray-700 mb-4">High in minerals and antioxidants. Helps in weight management and blood sugar control.</p>
+            <a href="#" class="text-green-600 hover:text-green-800 font-medium">Learn more →</a>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="mb-16">
+    <h2 class="text-3xl font-bold text-center text-green-800 mb-8">Success Stories</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Farmer Testimonial -->
+        <div class="glass p-6 rounded-lg">
+            <div class="flex items-center mb-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                    <img src="https://via.placeholder.com/150" alt="Farmer" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-green-800">Ramesh Kumar</h3>
+                    <p class="text-gray-600">Millet Farmer, Karnataka</p>
+                </div>
+            </div>
+            <p class="text-gray-700 italic">"Since joining ShreeAnna Connect, my income has increased by 40%. The direct market access and price prediction tools have helped me plan my harvests better."</p>
+        </div>
+        
+        <!-- Consumer Testimonial -->
+        <div class="glass p-6 rounded-lg">
+            <div class="flex items-center mb-4">
+                <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                    <img src="https://via.placeholder.com/150" alt="Consumer" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-amber-800">Priya Sharma</h3>
+                    <p class="text-gray-600">Health Enthusiast, Mumbai</p>
+                </div>
+            </div>
+            <p class="text-gray-700 italic">"The health advisory feature has transformed my diet. I've discovered amazing millet recipes that have improved my health and energy levels."</p>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="glass-dark p-8 rounded-lg text-center mb-16">
+    <h2 class="text-3xl font-bold text-white mb-4">Ready to Join the Millet Revolution?</h2>
+    <p class="text-xl text-gray-200 mb-8">Connect with farmers, discover health benefits, and be part of a sustainable future.</p>
+    
+    <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="{% url 'register_farmer' %}" class="btn-glass px-6 py-3 text-white font-bold rounded-lg bg-green-600 hover:bg-green-700 transition duration-300">
+            Join as Farmer
+        </a>
+        <a href="{% url 'register_consumer' %}" class="btn-glass px-6 py-3 text-white font-bold rounded-lg bg-amber-600 hover:bg-amber-700 transition duration-300">
+            Join as Consumer
+        </a>
+    </div>
+</div>
+{% endblock %}
